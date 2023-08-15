@@ -235,6 +235,7 @@ class _SlidingUpPanelState extends State<SlidingUpPanel>
         )
       ..addListener(() {
         if (widget.onPanelSlide != null) widget.onPanelSlide!(_ac.value);
+        if (_ac.value == 1.0) _scrollingEnabled = true;
         if (widget.onPanelOpened != null && _ac.value == 1.0)
           widget.onPanelOpened!();
 
