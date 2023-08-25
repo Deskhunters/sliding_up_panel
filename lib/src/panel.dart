@@ -248,7 +248,8 @@ class _SlidingUpPanelState extends State<SlidingUpPanel>
     // draggable and panel scrolling is enabled
     _sc = new ScrollController();
     _sc.addListener(() {
-      if (widget.isDraggable && !_scrollingEnabled) _sc.jumpTo(0);
+      if (widget.isDraggable && !_scrollingEnabled && _ac.value != 0.0)
+        _sc.jumpTo(0);
     });
 
     widget.controller?._addState(this);
@@ -606,11 +607,11 @@ class _SlidingUpPanelState extends State<SlidingUpPanel>
   //---------------------------------
 
   //close the panel
-  Future<void> _close() async {
-    return _ac.fling(velocity: -1.0).then((x) {
-      _sc.jumpTo(0);
-      _scrollingEnabled = false;
-    });
+  Future<void> _close() {
+    _sc.animateTo(0,
+        duration: const Duration(milliseconds: 600),
+        curve: Curves.easeOutQuart);
+    return _ac.fling(velocity: -1.0).then((_) => _scrollingEnabled = false);
   }
 
   //open the panel
